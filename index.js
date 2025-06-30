@@ -111,8 +111,8 @@ server.listen(PORT, () => {
   console.log(`ZORD Backend server running on port ${PORT}`)
 })
 
-app.use(sanitizeRequest)
-app.use(xss())
+// app.use(sanitizeRequest)
+// app.use(xss())
 
 module.exports = app
 
