@@ -12,6 +12,8 @@ const isAuth = async (req, res, next) => {
       return res.status(401).json({ message: "Access denied. No token provided." })
     }
 
+    console.log("Token received:", token)
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
     const user = await User.findById(decoded.id).select("-password")
 

@@ -2,6 +2,7 @@ const express = require("express");
 const multer = require("multer");
 const { uploadToCloudinary } = require("../utils/cloudinary");
 const { isAuth } = require("../middleware/auth");
+const Post = require("../models/Post");
 
 const router = express.Router();
 
@@ -33,11 +34,19 @@ router.post("/", isAuth, upload.single("media"), async (req, res) => {
 
     const result = await uploadToCloudinary(req.file, "zord/posts");
 
-    res.json({
-      message: "File uploaded successfully",
+    // Create post in DB
+    const post = await Post.create({
+      userId: req.user._id,
+      caption: req.body.caption || "",
       mediaUrl: result.url,
       mediaPublicId: result.publicId,
       mediaType: mediaType,
+      visibility: req.body.visibility || "everyone",
+    });
+
+    res.status(201).json({
+      message: "Post created successfully",
+      post,
     });
   } catch (error) {
     res.status(500).json({
@@ -46,6 +55,7 @@ router.post("/", isAuth, upload.single("media"), async (req, res) => {
     });
   }
 });
+
 
 
 // Upload avatar
