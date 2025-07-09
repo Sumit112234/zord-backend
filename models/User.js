@@ -9,6 +9,12 @@ const userSchema = new mongoose.Schema(
       trim: true,
       maxlength: [50, "Name cannot exceed 50 characters"],
     },
+      provider: {
+      type: String,
+      enum: ["manual", "google"],
+      default: "manual",
+     },
+
     email: {
       type: String,
       required: [true, "Email is required"],
@@ -18,13 +24,11 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, "Password is required"],
       minlength: [6, "Password must be at least 6 characters"],
       select: false,
     },
     collegeId: {
       type: String,
-      required: [true, "College ID is required"],
       trim: true,
     },
     collegeName: {
