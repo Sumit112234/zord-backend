@@ -381,4 +381,26 @@ router.post("/refresh-token", async (req, res) => {
   }
 })
 
+
+// DELETE /api/auth/users/:id
+router.delete("/delete-user/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Optional: Add authentication/authorization here
+
+    const deletedUser = await User.findByIdAndDelete(id);
+
+    if (!deletedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({ message: "User deleted successfully", user: deletedUser });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+
 module.exports = router
