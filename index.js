@@ -33,7 +33,7 @@ const app = express()
 const server = http.createServer(app)
 const io = socketIo(server, {
   cors: {
-    origin: process.env.CLIENT_URL || "http://localhost:3000",
+    origin: [process.env.CLIENT_URL1 || "http://localhost:3000", process.env.CLIENT_URL2],
     methods: ["GET", "POST"],
   },
 })
@@ -45,7 +45,7 @@ initializeSocket(io)
 app.use(helmet())
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:3000",
+    origin: [process.env.CLIENT_URL1 || "http://localhost:3000", process.env.CLIENT_URL2],
     credentials: true,
   }),
 )
