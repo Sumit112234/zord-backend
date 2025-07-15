@@ -144,12 +144,12 @@ router.post("/register", validateRegister, async (req, res) => {
     const existingUser = await User.findOne({ email })
     if (existingUser) {
       
-      user.name = name 
-      user.password = password
-      user.collegeName = collegeName 
-      user.role = role || "student"
+      existingUser.name = name 
+      existingUser.password = password
+      existingUser.collegeName = collegeName 
+      existingUser.role = role || "student"
 
-      await user.save();
+      await existingUser.save();
 
 
       return res.status(200).json({ message: "User updated Successfully!" })
@@ -383,7 +383,7 @@ router.post("/refresh-token", async (req, res) => {
 
 
 // DELETE /api/auth/users/:id
-router.delete("/delete-user/:id", async (req, res) => {
+router.delete("/users/:id", async (req, res) => {
   try {
     const { id } = req.params;
 

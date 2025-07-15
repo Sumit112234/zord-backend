@@ -29,6 +29,7 @@ const express = require("express")
 const connectDB = require("./utils/connectDB")
 const app = express()
 
+console.log("ZORD Backend server starting...", process.env.CLIENT_URL2)
 
 const server = http.createServer(app)
 const io = socketIo(server, {
